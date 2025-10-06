@@ -1,3 +1,5 @@
+import pandas as pd
+
 class MortgagePayment:
     def __init__(self, interest_rate, amortization_period):
         self.interest_rate = interest_rate
@@ -38,6 +40,19 @@ class MortgagePayment:
         rapid_weekly_payment = monthly_payment / 4
         print(f"Rapid Weekly Payment: ${rapid_weekly_payment:.2f}")
 
+class ExchangeRates:
+    def __init__(self, file_path):
+        self.rate = pd.read_csv(file_path, usecols= ['USD/CAD']).iloc[-1].iloc[-1]
+
+    def convert(self,from_currency, to_currency, amount):
+        if from_currency == "CAD" and to_currency == "USD":
+            value = amount / self.rate
+        elif from_currency == "USD" and to_currency == "CAD":
+            value = amount * self.rate  
+
+        return round(value, 2)
+    
+
 def main():
     print("### PART 1 ###")
     principal_amount = float(input("What is the Principal Amount: "))
@@ -46,8 +61,16 @@ def main():
 
     mp = MortgagePayment(quoted_interest_rate, amortization_period)
     mp.payments(principal_amount)
-
+    
     print("### PART 2 ###")
+    from_currency = str(input("Which currency would you like to convert from (CAD/USD): ")).upper()
+    to_currency = str(input("Which currency would you like to convert to (CAD/USD): ")).upper()
+    amount = float(input("Amount to convert: "))
+
+    er = ExchangeRates(r"C:\Users\Admin\OneDrive - York University\FINE3300-2025-A1\BankOfCanadaExchangeRates.csv")
+    converted = er.convert(from_currency, to_currency, amount)
+    
+    print(f"${amount:.2f} {from_currency} to {to_currency} is ${converted:.2f}")
 
 
 if __name__ == "__main__":

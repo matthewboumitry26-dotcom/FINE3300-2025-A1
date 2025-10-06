@@ -14,7 +14,7 @@ Note: Uses the present value of an annuity factor with semiannual compounding as
 
 ## Part 2: Exchange Rates
 - Designed an `ExchangeRates` class in Python.  
-- Reads exchange rate data from `BankOfCanadaExchangeRates.csv`.  
+- Reads exchange rate data from `BankOfCanadaExchangeRates.csv` using pandas library. 
 - Provides a method to convert between **CAD ↔ USD** using the most recent rate in the file.  
 
 ## Results
